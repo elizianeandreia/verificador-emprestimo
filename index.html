@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificador de Empréstimo - Lths Tecnologia</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <script src="script.js" type="module" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Verificador de Empréstimo</h1>
+    <p class="subtitle">Simule seu empréstimo com base na sua renda e score de crédito</p>
+  </header>
+
+  <main>
+    <form id="loan-form">
+      <div class="input-group">
+        <label for="loan-type">Tipo de Empréstimo:</label>
+        <select id="loan-type" required>
+          <option value="" disabled selected>Escolha uma opção</option>
+          <option value="duplex">Duplex</option>
+          <option value="condominio">Condomínio</option>
+          <option value="carro">Carro</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="income">Renda Mensal:</label>
+        <input type="number" id="income" required />
+      </div>
+
+      <div class="input-group">
+        <label for="score">Score de Crédito:</label>
+        <input type="number" id="score" required />
+      </div>
+
+      <div class="input-group">
+        <label for="amount">Valor do Empréstimo:</label>
+        <input type="number" id="amount" required />
+      </div>
+
+      <div class="input-group">
+        <label for="term">Parcelas (meses):</label>
+        <input type="number" id="term" required />
+      </div>
+
+      <button type="submit">Verificar</button>
+    </form>
+
+    <div id="result" class="result-box hidden"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 <strong>Lths Tecnologia</strong> — Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
+
