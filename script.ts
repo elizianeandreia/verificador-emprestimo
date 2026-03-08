@@ -15,7 +15,7 @@ form.addEventListener('submit', function (e) {
 
 function verificarEmprestimo(tipo: string, renda: number, score: number): string {
   const requisitos = {
-    duplex: { renda: 60000, score: 700 },
+    duplex: { renda: 6000, score: 700 },
     condominio: { renda: 4500, score: 680 },
     carro: { renda: 3000, score: 650 }
   };
