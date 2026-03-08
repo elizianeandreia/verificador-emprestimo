@@ -15,9 +15,9 @@ form.addEventListener('submit', function (e) {
 
 function verificarEmprestimo(tipo: string, renda: number, score: number): string {
   const requisitos = {
-    duplex: { renda: 60000, score: 700 },
-    condominio: { renda: 45000, score: 680 },
-    carro: { renda: 30000, score: 650 }
+    duplex: { renda: 6000, score: 700 },
+    condominio: { renda: 4500, score: 680 },
+    carro: { renda: 3000, score: 650 }
   };
 
   const req = requisitos[tipo as keyof typeof requisitos];
