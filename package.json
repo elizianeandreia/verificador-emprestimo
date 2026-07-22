@@ -1,0 +1,24 @@
+{
+  "name": "verificador-emprestimo",
+  "version": "1.0.0",
+  "description": "Este projeto é uma aplicação web simples desenvolvida em HTML, CSS, TypeScript e JavaScript. Ele permite ao usuário verificar se está apto a receber um empréstimo com base na sua renda mensal, score de crédito e tipo de empréstimo desejado.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elizianeandreia/verificador-emprestimo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/elizianeandreia/verificador-emprestimo/issues"
+  },
+  "homepage": "https://github.com/elizianeandreia/verificador-emprestimo#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,59 +1,431 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verificador de Empréstimo - Lths Tecnologia</title>
-  <link rel="stylesheet" href="estilo.css" />
-  <script src="script.js" type="module" defer></script>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Simulador demonstrativo de crédito da LTHS Tecnologia"
+  >
+
+  <title>Simulador de Crédito | LTHS Tecnologia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./estilo.css?v=6">
+
+  <script src="./script.js?v=6" type="module" defer></script>
 </head>
+
 <body>
-  <header>
-    <h1>Verificador de Empréstimo</h1>
-    <p class="subtitle">Simule seu empréstimo com base na sua renda e score de crédito</p>
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-symbol">L</div>
+
+        <div class="brand-content">
+          <strong>LTHS Finance </strong>
+          <span>Simulador educacional</span>
+        </div>
+      </div>
+
+      <div class="security-badge">
+        <span></span>
+        Nenhum dado é enviado
+      </div>
+    </div>
   </header>
 
   <main>
-    <form id="loan-form">
-      <div class="input-group">
-        <label for="loan-type">Tipo de Empréstimo:</label>
-        <select id="loan-type" required>
-          <option value="" disabled selected>Escolha uma opção</option>
-          <option value="duplex">Duplex</option>
-          <option value="condominio">Condomínio</option>
-          <option value="carro">Carro</option>
-        </select>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-label">Pré-simulação financeira</span>
+
+        <h1>
+          Descubra se uma proposta de crédito cabe no seu orçamento
+        </h1>
+
+        <p>
+          Compare valor solicitado, prazo, parcela estimada,
+          score e comprometimento de renda em uma experiência
+          inspirada nos simuladores financeiros digitais.
+        </p>
+
+        <div class="hero-features">
+          <span>✓ Cálculo instantâneo</span>
+          <span>✓ Sem CPF</span>
+          <span>✓ Dados não armazenados</span>
+        </div>
       </div>
 
-      <div class="input-group">
-        <label for="income">Renda Mensal:</label>
-        <input type="number" id="income" required />
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-card visual-card-back"></div>
+
+        <div class="visual-card visual-card-front">
+          <span class="visual-card-label">Parcela estimada</span>
+          <strong>R$ 1.284,90</strong>
+
+          <div class="visual-line"></div>
+          <div class="visual-line short"></div>
+
+          <div class="visual-status">
+            <span></span>
+            Simulação concluída
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="simulator-section">
+      <div class="simulator-heading">
+        <div>
+          <span class="section-label">Simulador</span>
+          <h2>Configure sua proposta</h2>
+        </div>
+
+        <p>
+          Os valores e taxas utilizados são exclusivamente ilustrativos.
+        </p>
       </div>
 
-      <div class="input-group">
-        <label for="score">Score de Crédito:</label>
-        <input type="number" id="score" required />
+      <div class="simulator-grid">
+        <form id="loan-form" class="simulator-card" novalidate>
+          <div class="card-header">
+            <div class="step-number">1</div>
+
+            <div>
+              <h2>Modalidade de crédito</h2>
+              <p>Selecione o produto que deseja simular.</p>
+            </div>
+          </div>
+
+          <input
+            id="loan-type"
+            type="hidden"
+            value="pessoal"
+          >
+
+          <div class="product-options">
+            <button
+              class="product-card active"
+              type="button"
+              data-loan-type="pessoal"
+              aria-pressed="true"
+            >
+              <span class="product-icon">R$</span>
+
+              <span class="product-content">
+                <strong>Empréstimo pessoal</strong>
+                <small>Crédito sem garantia</small>
+              </span>
+
+              <span class="product-check">✓</span>
+            </button>
+
+            <button
+              class="product-card"
+              type="button"
+              data-loan-type="veiculo"
+              aria-pressed="false"
+            >
+              <span class="product-icon">▰</span>
+
+              <span class="product-content">
+                <strong>Financiamento de veículo</strong>
+                <small>Carro novo ou usado</small>
+              </span>
+
+              <span class="product-check">✓</span>
+            </button>
+
+            <button
+              class="product-card"
+              type="button"
+              data-loan-type="imovel"
+              aria-pressed="false"
+            >
+              <span class="product-icon">⌂</span>
+
+              <span class="product-content">
+                <strong>Financiamento imobiliário</strong>
+                <small>Casa ou apartamento</small>
+              </span>
+
+              <span class="product-check">✓</span>
+            </button>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-heading">
+              <div class="step-number">2</div>
+
+              <div>
+                <h2>Informações financeiras</h2>
+                <p>Informe apenas valores aproximados.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="input-group">
+                <label for="income">
+                  Renda familiar mensal
+                  <span>*</span>
+                </label>
+
+                <div class="currency-input">
+                  <span>R$</span>
+
+                  <input
+                    id="income"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="0,00"
+                    autocomplete="off"
+                  >
+                </div>
+
+                <small>Considere a renda bruta comprovável.</small>
+              </div>
+
+              <div class="input-group">
+                <label for="commitments">
+                  Parcelas e dívidas mensais
+                </label>
+
+                <div class="currency-input">
+                  <span>R$</span>
+
+                  <input
+                    id="commitments"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="0,00"
+                    autocomplete="off"
+                  >
+                </div>
+
+                <small>Financiamentos, empréstimos e cartões.</small>
+              </div>
+
+              <div class="input-group">
+                <label id="amountLabel" for="amount">
+                  Valor desejado
+                  <span>*</span>
+                </label>
+
+                <div class="currency-input">
+                  <span>R$</span>
+
+                  <input
+                    id="amount"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="0,00"
+                    autocomplete="off"
+                  >
+                </div>
+
+                <small id="amountHelper">
+                  Valor entre R$ 1.000 e R$ 80.000.
+                </small>
+              </div>
+
+              <div
+                id="downPaymentGroup"
+                class="input-group"
+                hidden
+              >
+                <label for="downPayment">
+                  Valor da entrada
+                  <span>*</span>
+                </label>
+
+                <div class="currency-input">
+                  <span>R$</span>
+
+                  <input
+                    id="downPayment"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="0,00"
+                    autocomplete="off"
+                  >
+                </div>
+
+                <small id="downPaymentHelper">
+                  Informe o valor disponível para entrada.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-heading">
+              <div class="step-number">3</div>
+
+              <div>
+                <h2>Perfil e prazo</h2>
+                <p>Ajuste os controles para concluir.</p>
+              </div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <div>
+                  <label for="score">Score de crédito</label>
+                  <small>Pontuação informada pelo consumidor</small>
+                </div>
+
+                <div class="slider-output">
+                  <strong id="scoreValue">550</strong>
+                  <span id="scoreClassification">Bom</span>
+                </div>
+              </div>
+
+              <input
+                id="score"
+                class="range-input"
+                type="range"
+                min="0"
+                max="1000"
+                step="1"
+                value="550"
+              >
+
+              <div class="range-labels">
+                <span>0</span>
+                <span>500</span>
+                <span>1.000</span>
+              </div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <div>
+                  <label for="term">Prazo da operação</label>
+                  <small id="termHelper">De 6 a 60 meses</small>
+                </div>
+
+                <div class="slider-output term">
+                  <strong id="termValue">24</strong>
+                  <span>meses</span>
+                </div>
+              </div>
+
+              <input
+                id="term"
+                class="range-input"
+                type="range"
+                min="6"
+                max="60"
+                step="6"
+                value="24"
+              >
+
+              <div class="range-labels">
+                <span id="termMinimum">6 meses</span>
+                <span id="termMaximum">60 meses</span>
+              </div>
+            </div>
+
+            <div class="rate-preview">
+              <div>
+                <span>Taxa ilustrativa inicial</span>
+                <strong id="ratePreview">2,39% ao mês</strong>
+              </div>
+
+              <span class="rate-tag">Demonstração</span>
+            </div>
+          </div>
+
+          <div
+            id="formError"
+            class="form-error"
+            role="alert"
+            hidden
+          ></div>
+
+          <button class="simulate-button" type="submit">
+            Calcular simulação
+            <span>→</span>
+          </button>
+
+          <p class="form-disclaimer">
+            A simulação não representa promessa, proposta ou aprovação
+            de crédito e não consulta bancos de dados externos.
+          </p>
+        </form>
+
+        <aside
+          id="result"
+          class="result-panel"
+          aria-live="polite"
+        >
+          <div class="result-placeholder">
+            <div class="placeholder-icon">%</div>
+
+            <h2>Seu resultado aparecerá aqui</h2>
+
+            <p>
+              Preencha os dados da proposta para visualizar parcela,
+              comprometimento de renda e perfil indicativo.
+            </p>
+
+            <div class="placeholder-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <div class="input-group">
-        <label for="amount">Valor do Empréstimo:</label>
-        <input type="number" id="amount" required />
-      </div>
+    <section class="information-section">
+      <article>
+        <div class="information-icon">i</div>
 
-      <div class="input-group">
-        <label for="term">Parcelas (meses):</label>
-        <input type="number" id="term" required />
-      </div>
+        <div>
+          <strong>O que esta ferramenta considera?</strong>
 
-      <button type="submit">Verificar</button>
-    </form>
+          <p>
+            Valor financiado, prazo, taxa ilustrativa, score informado,
+            renda e compromissos financeiros existentes.
+          </p>
+        </div>
+      </article>
 
-    <div id="result" class="result-box hidden"></div>
+      <article>
+        <div class="information-icon">!</div>
+
+        <div>
+          <strong>O que não está incluído?</strong>
+
+          <p>
+            CET, seguros, tarifas, tributos, atualização monetária,
+            cadastro, garantias e políticas internas das instituições.
+          </p>
+        </div>
+      </article>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 <strong>Lths Tecnologia</strong> — Todos os direitos reservados.</p>
+    <p>
+      © <span id="currentYear"></span>
+      <strong>LTHS Tecnologia</strong>  Projeto demonstrativo.
+    </p>
   </footer>
 </body>
 </html>
-
