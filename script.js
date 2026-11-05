@@ -462,3 +462,5 @@ setCurrencyInput(commitmentsInput, 0);
 setCurrencyInput(downPaymentInput, 0);
 updateScoreDisplay();
 updateLoanType("pessoal");
+if (typeof lucide !== 'undefined')
+    lucide.createIcons();

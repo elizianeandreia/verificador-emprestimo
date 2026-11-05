@@ -10,8 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./estilo.css?v=9">
-  <script src="./script.js?v=9" type="module" defer></script>
+  <!-- Biblioteca de Ícones SVG -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="./estilo.css?v=10">
+  <script src="./script.js?v=10" type="module" defer></script>
 </head>
 
 <body>
@@ -85,30 +88,30 @@
 
           <div class="product-options">
             <button class="product-card active" type="button" data-loan-type="pessoal" aria-pressed="true">
-              <span class="product-icon">R$</span>
+              <span class="product-icon"><i data-lucide="banknote"></i></span>
               <span class="product-content">
                 <strong>Empréstimo pessoal</strong>
                 <small>Crédito sem garantia</small>
               </span>
-              <span class="product-check">✓</span>
+              <span class="product-check"><i data-lucide="check"></i></span>
             </button>
 
             <button class="product-card" type="button" data-loan-type="veiculo" aria-pressed="false">
-              <span class="product-icon">▰</span>
+              <span class="product-icon"><i data-lucide="car"></i></span>
               <span class="product-content">
                 <strong>Financiamento de veículo</strong>
                 <small>Carro novo ou usado</small>
               </span>
-              <span class="product-check">✓</span>
+              <span class="product-check"><i data-lucide="check"></i></span>
             </button>
 
             <button class="product-card" type="button" data-loan-type="imovel" aria-pressed="false">
-              <span class="product-icon">⌂</span>
+              <span class="product-icon"><i data-lucide="home"></i></span>
               <span class="product-content">
                 <strong>Financiamento imobiliário</strong>
                 <small>Casa ou apartamento</small>
               </span>
-              <span class="product-check">✓</span>
+              <span class="product-check"><i data-lucide="check"></i></span>
             </button>
           </div>
 
@@ -253,7 +256,7 @@
 
     <section class="information-section">
       <article>
-        <div class="information-icon">i</div>
+        <div class="information-icon"><i data-lucide="info"></i></div>
         <div>
           <strong>O que esta ferramenta considera?</strong>
           <p>
@@ -264,7 +267,7 @@
       </article>
 
       <article>
-        <div class="information-icon">!</div>
+        <div class="information-icon"><i data-lucide="alert-circle"></i></div>
         <div>
           <strong>O que não está incluído?</strong>
           <p>

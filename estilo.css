@@ -1143,6 +1143,38 @@ footer strong {
   }
 }
 
+[data-lucide] {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+}
+
+.product-icon [data-lucide] {
+  width: 18px;
+  height: 18px;
+}
+
+.product-check {
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+  top: 14px;
+  right: 14px;
+}
+
+.product-check [data-lucide] {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+
+.information-icon [data-lucide] {
+  width: 18px;
+  height: 18px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

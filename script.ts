@@ -1,3 +1,5 @@
+declare const lucide: any;
+
 type LoanType = "pessoal" | "veiculo" | "imovel";
 type ResultStatus = "compatible" | "review" | "unfavorable";
 type ScoreLevel = "baixo" | "regular" | "bom" | "excelente";
@@ -589,3 +591,5 @@ setCurrencyInput(commitmentsInput, 0);
 setCurrencyInput(downPaymentInput, 0);
 updateScoreDisplay();
 updateLoanType("pessoal");
+
+if (typeof lucide !== 'undefined') lucide.createIcons();
