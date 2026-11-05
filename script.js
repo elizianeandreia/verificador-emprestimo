@@ -100,37 +100,22 @@ const decimalFormatter = new Intl.NumberFormat("pt-BR", {
 let selectedLoanType = "pessoal";
 function getScoreProfile(score) {
     if (score <= 300) {
-        return {
-            level: "baixo",
-            label: "Baixo"
-        };
+        return { level: "baixo", label: "Baixo" };
     }
     if (score <= 500) {
-        return {
-            level: "regular",
-            label: "Regular"
-        };
+        return { level: "regular", label: "Regular" };
     }
     if (score <= 700) {
-        return {
-            level: "bom",
-            label: "Bom"
-        };
+        return { level: "bom", label: "Bom" };
     }
-    return {
-        level: "excelente",
-        label: "Excelente"
-    };
+    return { level: "excelente", label: "Excelente" };
 }
 function formatCurrency(value) {
     return currencyFormatter.format(Number.isFinite(value) ? value : 0);
 }
 function setCurrencyInput(input, value) {
     input.dataset.value = String(value);
-    input.value =
-        value > 0
-            ? decimalFormatter.format(value)
-            : "";
+    input.value = value > 0 ? decimalFormatter.format(value) : "";
 }
 function readCurrencyInput(input) {
     return Number(input.dataset.value || 0);
@@ -160,34 +145,25 @@ function updateLoanType(type) {
     selectedLoanType = type;
     loanTypeInput.value = type;
     const config = loanConfigs[type];
-    document
-        .querySelectorAll(".product-card")
-        .forEach(card => {
+    document.querySelectorAll(".product-card").forEach(card => {
         const isActive = card.dataset.loanType === type;
         card.classList.toggle("active", isActive);
         card.setAttribute("aria-pressed", String(isActive));
     });
-    amountLabel.innerHTML =
-        `${config.amountLabel} <span>*</span>`;
-    amountHelper.textContent =
-        config.amountDescription;
+    amountLabel.innerHTML = `${config.amountLabel} <span>*</span>`;
+    amountHelper.textContent = config.amountDescription;
     termInput.min = String(config.minimumTerm);
     termInput.max = String(config.maximumTerm);
     termInput.step = String(config.termStep);
     termInput.value = String(config.defaultTerm);
-    termMinimum.textContent =
-        `${config.minimumTerm} meses`;
-    termMaximum.textContent =
-        `${config.maximumTerm} meses`;
-    termHelper.textContent =
-        `De ${config.minimumTerm} a ${config.maximumTerm} meses`;
-    ratePreview.textContent =
-        `${decimalFormatter.format(config.baseMonthlyRate)}% ao mês`;
+    termMinimum.textContent = `${config.minimumTerm} meses`;
+    termMaximum.textContent = `${config.maximumTerm} meses`;
+    termHelper.textContent = `De ${config.minimumTerm} a ${config.maximumTerm} meses`;
+    ratePreview.textContent = `${decimalFormatter.format(config.baseMonthlyRate)}% ao mês`;
     const hasDownPayment = type !== "pessoal";
     downPaymentGroup.hidden = !hasDownPayment;
     if (hasDownPayment) {
-        downPaymentHelper.textContent =
-            `Referência ilustrativa mínima: ${config.minimumDownPayment}% do valor.`;
+        downPaymentHelper.textContent = `Referência ilustrativa mínima: ${config.minimumDownPayment}% do valor.`;
     }
     else {
         setCurrencyInput(downPaymentInput, 0);
@@ -196,28 +172,22 @@ function updateLoanType(type) {
     renderPlaceholder();
 }
 function getAdjustedRate(config, scoreProfile) {
-    return (config.baseMonthlyRate +
-        config.rateAdjustments[scoreProfile.level]);
+    return config.baseMonthlyRate + config.rateAdjustments[scoreProfile.level];
 }
 function calculatePriceInstallment(principal, monthlyRatePercentage, term) {
     const rate = monthlyRatePercentage / 100;
-    if (rate === 0) {
+    if (rate === 0)
         return principal / term;
-    }
     const factor = Math.pow(1 + rate, term);
-    return (principal *
-        ((rate * factor) / (factor - 1)));
+    return principal * ((rate * factor) / (factor - 1));
 }
 function calculatePresentValue(installment, monthlyRatePercentage, term) {
     const rate = monthlyRatePercentage / 100;
-    if (installment <= 0) {
+    if (installment <= 0)
         return 0;
-    }
-    if (rate === 0) {
+    if (rate === 0)
         return installment * term;
-    }
-    return (installment *
-        ((1 - Math.pow(1 + rate, -term)) / rate));
+    return installment * ((1 - Math.pow(1 + rate, -term)) / rate);
 }
 function validateInput(input) {
     const config = loanConfigs[input.type];
@@ -227,16 +197,13 @@ function validateInput(input) {
     if (input.commitments < 0) {
         return "O valor dos compromissos financeiros não pode ser negativo.";
     }
-    if (input.amount < config.minimumAmount ||
-        input.amount > config.maximumAmount) {
+    if (input.amount < config.minimumAmount || input.amount > config.maximumAmount) {
         return `Para esta demonstração, informe um valor entre ${formatCurrency(config.minimumAmount)} e ${formatCurrency(config.maximumAmount)}.`;
     }
-    if (input.type !== "pessoal" &&
-        input.downPayment >= input.amount) {
+    if (input.type !== "pessoal" && input.downPayment >= input.amount) {
         return "A entrada deve ser menor que o valor total do bem.";
     }
-    if (input.type !== "pessoal" &&
-        input.downPayment < 0) {
+    if (input.type !== "pessoal" && input.downPayment < 0) {
         return "Informe um valor de entrada válido.";
     }
     return null;
@@ -244,34 +211,24 @@ function validateInput(input) {
 function runSimulation(input) {
     const config = loanConfigs[input.type];
     const scoreProfile = getScoreProfile(input.score);
-    const financedAmount = input.type === "pessoal"
-        ? input.amount
-        : input.amount - input.downPayment;
-    const entryPercentage = input.type === "pessoal"
-        ? 0
-        : (input.downPayment / input.amount) * 100;
+    const financedAmount = input.type === "pessoal" ? input.amount : input.amount - input.downPayment;
+    const entryPercentage = input.type === "pessoal" ? 0 : (input.downPayment / input.amount) * 100;
     const monthlyRate = getAdjustedRate(config, scoreProfile);
     const installment = calculatePriceInstallment(financedAmount, monthlyRate, input.term);
     const totalPaid = installment * input.term;
     const totalInterest = totalPaid - financedAmount;
     const installmentPercentage = (installment / input.income) * 100;
-    const commitmentPercentage = ((installment + input.commitments) /
-        input.income) *
-        100;
+    const commitmentPercentage = ((installment + input.commitments) / input.income) * 100;
     const maximumAffordablePayment = Math.max(input.income * 0.3 - input.commitments, 0);
     const estimatedCapacity = calculatePresentValue(maximumAffordablePayment, monthlyRate, input.term);
     const scorePassed = input.score >= config.referenceScore;
     const incomePassed = commitmentPercentage <= 30;
-    const entryPassed = input.type === "pessoal" ||
-        entryPercentage >= config.minimumDownPayment;
+    const entryPassed = input.type === "pessoal" || entryPercentage >= config.minimumDownPayment;
     let status;
-    if (scorePassed &&
-        incomePassed &&
-        entryPassed) {
+    if (scorePassed && incomePassed && entryPassed) {
         status = "compatible";
     }
-    else if (input.score >= 301 &&
-        commitmentPercentage <= 40) {
+    else if (input.score >= 301 && commitmentPercentage <= 40) {
         status = "review";
     }
     else {
@@ -318,12 +275,10 @@ function getStatusContent(status) {
     };
 }
 function getCommitmentClass(percentage) {
-    if (percentage <= 30) {
+    if (percentage <= 30)
         return "good";
-    }
-    if (percentage <= 40) {
+    if (percentage <= 40)
         return "warning";
-    }
     return "danger";
 }
 function renderCriteria(passed, title, description) {
@@ -332,7 +287,6 @@ function renderCriteria(passed, title, description) {
       <span class="criteria-icon">
         ${passed ? "✓" : "!"}
       </span>
-
       <div>
         <strong>${title}</strong>
         <span>${description}</span>
@@ -353,19 +307,15 @@ function renderResult(simulation, input) {
         <span class="result-status-label">
           ${statusContent.label}
         </span>
-
         <h2>${statusContent.title}</h2>
-
         <p>${statusContent.description}</p>
       </div>
 
       <div class="main-result">
         <span>Parcela mensal estimada</span>
-
         <strong>
           ${formatCurrency(simulation.installment)}
         </strong>
-
         <small>
           ${input.term} parcelas pelo sistema Price simplificado
         </small>
@@ -374,74 +324,45 @@ function renderResult(simulation, input) {
       <div class="result-metrics">
         <div class="result-metric">
           <span>Valor financiado</span>
-          <strong>
-            ${formatCurrency(simulation.financedAmount)}
-          </strong>
+          <strong>${formatCurrency(simulation.financedAmount)}</strong>
         </div>
-
         <div class="result-metric">
           <span>Taxa utilizada</span>
-          <strong>
-            ${decimalFormatter.format(simulation.monthlyRate)}% a.m.
-          </strong>
+          <strong>${decimalFormatter.format(simulation.monthlyRate)}% a.m.</strong>
         </div>
-
         <div class="result-metric">
           <span>Total das parcelas</span>
-          <strong>
-            ${formatCurrency(simulation.totalPaid)}
-          </strong>
+          <strong>${formatCurrency(simulation.totalPaid)}</strong>
         </div>
-
         <div class="result-metric">
           <span>Juros estimados</span>
-          <strong>
-            ${formatCurrency(simulation.totalInterest)}
-          </strong>
+          <strong>${formatCurrency(simulation.totalInterest)}</strong>
         </div>
       </div>
 
       <div class="analysis-block">
         <div class="analysis-heading">
           <span>Comprometimento total da renda</span>
-
-          <strong>
-            ${decimalFormatter.format(simulation.commitmentPercentage)}%
-          </strong>
+          <strong>${decimalFormatter.format(simulation.commitmentPercentage)}%</strong>
         </div>
-
         <div class="analysis-track">
-          <div
-            class="analysis-value ${getCommitmentClass(simulation.commitmentPercentage)}"
-            style="width: ${commitmentWidth}%"
-          ></div>
+          <div class="analysis-value ${getCommitmentClass(simulation.commitmentPercentage)}" style="width: ${commitmentWidth}%"></div>
         </div>
       </div>
 
       <div class="analysis-block">
         <div class="analysis-heading">
-          <span>
-            Score informado · ${simulation.scoreProfile.label}
-          </span>
-
+          <span>Score informado · ${simulation.scoreProfile.label}</span>
           <strong>${input.score}/1.000</strong>
         </div>
-
         <div class="analysis-track">
-          <div
-            class="analysis-value ${simulation.scorePassed
-        ? "good"
-        : "warning"}"
-            style="width: ${scoreWidth}%"
-          ></div>
+          <div class="analysis-value ${simulation.scorePassed ? "good" : "warning"}" style="width: ${scoreWidth}%"></div>
         </div>
       </div>
 
       <div class="criteria-list">
         ${renderCriteria(simulation.scorePassed, "Score de referência", `Score informado: ${input.score}. Referência interna demonstrativa: ${simulation.config.referenceScore}.`)}
-
         ${renderCriteria(simulation.incomePassed, "Capacidade de pagamento", `Parcela e compromissos consomem ${decimalFormatter.format(simulation.commitmentPercentage)}% da renda. Referência utilizada: até 30%.`)}
-
         ${renderCriteria(simulation.entryPassed, "Valor de entrada", entryDescription)}
       </div>
 
@@ -452,11 +373,7 @@ function renderResult(simulation, input) {
         o Custo Efetivo Total.
       </div>
 
-      <button
-        id="resetSimulation"
-        class="reset-button"
-        type="button"
-      >
+      <button id="resetSimulation" class="reset-button" type="button">
         Fazer nova simulação
       </button>
     </div>
@@ -471,14 +388,11 @@ function renderPlaceholder() {
     resultPanel.innerHTML = `
     <div class="result-placeholder">
       <div class="placeholder-icon">%</div>
-
       <h2>Seu resultado aparecerá aqui</h2>
-
       <p>
         Preencha os dados da proposta para visualizar parcela,
         comprometimento de renda e perfil indicativo.
       </p>
-
       <div class="placeholder-lines">
         <span></span>
         <span></span>
@@ -503,20 +417,13 @@ function resetSimulation() {
         behavior: "smooth"
     });
 }
-document
-    .querySelectorAll(".product-card")
-    .forEach(card => {
+document.querySelectorAll(".product-card").forEach(card => {
     card.addEventListener("click", () => {
         const type = card.dataset.loanType;
         updateLoanType(type);
     });
 });
-[
-    incomeInput,
-    commitmentsInput,
-    amountInput,
-    downPaymentInput
-].forEach(input => {
+[incomeInput, commitmentsInput, amountInput, downPaymentInput].forEach(input => {
     input.addEventListener("input", handleCurrencyInput);
     input.addEventListener("focus", () => {
         input.select();
